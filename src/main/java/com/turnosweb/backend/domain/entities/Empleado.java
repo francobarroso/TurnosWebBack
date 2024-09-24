@@ -25,6 +25,6 @@ public class Empleado extends Base {
     @OneToOne
     private Usuario usuario;
     
-    @OneToMany(mappedBy = "empleado")
+    @OneToMany(mappedBy = "empleado", cascade = CascadeType.ALL)
     private Set<Horario> horario;
 }
