@@ -33,6 +33,7 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	//DATABASE
 	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'com.mysql:mysql-connector-j'
 	//MAPSTRUCT
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'

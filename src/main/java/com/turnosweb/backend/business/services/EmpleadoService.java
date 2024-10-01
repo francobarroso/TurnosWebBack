@@ -7,4 +7,5 @@ import java.util.List;
 public interface EmpleadoService {
     Empleado create(Empleado empleado);
     List<Empleado> getAll();
+    Empleado update(Long id, Empleado empleado);
 }

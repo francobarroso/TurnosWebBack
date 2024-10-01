@@ -22,9 +22,10 @@ public class Empleado extends Base {
     @JoinColumn(name = "negocio_id")
     private Negocio negocio;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Usuario usuario;
     
-    @OneToMany(mappedBy = "empleado", cascade = CascadeType.ALL)
-    private Set<Horario> horario;
+    @OneToOne(mappedBy = "empleado", cascade = CascadeType.ALL)
+    @JoinColumn(name = "empleado_id")
+    private Horario horario;
 }
