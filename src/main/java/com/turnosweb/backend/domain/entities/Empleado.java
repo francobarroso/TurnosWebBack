@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -24,8 +25,9 @@ public class Empleado extends Base {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Usuario usuario;
-    
-    @OneToOne(mappedBy = "empleado", cascade = CascadeType.ALL)
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "empleado_id")
-    private Horario horario;
+    @Builder.Default
+    private Set<Horario> horarios = new HashSet<>();
 }

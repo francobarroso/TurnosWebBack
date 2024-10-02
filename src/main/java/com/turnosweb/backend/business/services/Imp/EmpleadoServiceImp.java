@@ -5,7 +5,6 @@ import com.turnosweb.backend.business.services.EmpleadoService;
 import com.turnosweb.backend.domain.dto.EmpleadoPostDto;
 import com.turnosweb.backend.domain.entities.Empleado;
 import com.turnosweb.backend.domain.entities.Horario;
-import com.turnosweb.backend.domain.entities.HorarioDetalles;
 import com.turnosweb.backend.domain.entities.Negocio;
 import com.turnosweb.backend.repositories.EmpleadoRepository;
 import com.turnosweb.backend.repositories.HorarioDetalleRepository;
@@ -37,7 +36,6 @@ public class EmpleadoServiceImp implements EmpleadoService {
         Negocio negocio = this.negocioRepository.findById(empleado.getNegocio().getId())
                 .orElseThrow(() -> new RuntimeException("El negocio con id " + empleado.getNegocio().getId() + " no existe"));
         empleado.setNegocio(negocio);
-        empleado.getHorario().setEmpleado(empleado);
         return this.empleadoRepository.save(empleado);
     }
 
@@ -51,17 +49,15 @@ public class EmpleadoServiceImp implements EmpleadoService {
         EmpleadoPostDto empleadoBd = this.empleadoMapper.toDTO(this.empleadoRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("Empleado con id " + id + " no existe")));
         eliminarHorarios(empleadoBd, empleado);
-        empleado.getHorario().setEmpleado(empleado);
         return this.empleadoRepository.save(empleado);
     }
 
     public void eliminarHorarios(EmpleadoPostDto empleadoBd, Empleado empleado){
-        Set<HorarioDetalles> horariosBd = empleadoBd.getHorario().getDetalles();
-        Set<HorarioDetalles> horariosReq = empleado.getHorario().getDetalles();
-        Set<HorarioDetalles> horariosElimiandos = new HashSet<>();
+        Set<Horario> horariosBd = empleadoBd.getHorarios();
+        Set<Horario> horariosReq = empleado.getHorarios();
 
         //Encontrar los horarios a eliminar
-        for(HorarioDetalles horarioBd : horariosBd) {
+        for(Horario horarioBd : horariosBd) {
             if (horariosReq.stream().noneMatch(horarioReq -> horarioReq.getId() != null && horarioReq.getId().equals(horarioBd.getId()))) {
                 horarioBd.getDias().clear();
                 this.horarioDetalleRepository.deleteById(horarioBd.getId());

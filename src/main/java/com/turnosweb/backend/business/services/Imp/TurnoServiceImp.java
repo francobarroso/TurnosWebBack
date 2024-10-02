@@ -1,6 +1,7 @@
 package com.turnosweb.backend.business.services.Imp;
 
 import com.turnosweb.backend.business.services.TurnoService;
+import com.turnosweb.backend.domain.dto.TurnoDto;
 import com.turnosweb.backend.domain.entities.Empleado;
 import com.turnosweb.backend.domain.entities.Servicio;
 import com.turnosweb.backend.domain.entities.Turno;
@@ -10,6 +11,10 @@ import com.turnosweb.backend.repositories.TurnoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @Service
@@ -39,11 +44,12 @@ public class TurnoServiceImp implements TurnoService {
         Servicio servicio = this.servicioRepository.findById(request.getServicio().getId())
                 .orElseThrow(() -> new RuntimeException("El servicio con id " + request.getServicio().getId() + " no existe"));
         request.setServicio(servicio);
+
         return this.turnoRepository.save(request);
     }
 
     @Override
-    public Turno update(Long id, Turno request) {
+    public Turno update(Long id, TurnoDto request) {
         Turno turnoBd = this.turnoRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("Turno con id " + id + " no encontrado"));
 

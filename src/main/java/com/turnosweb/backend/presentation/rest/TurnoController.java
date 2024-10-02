@@ -2,6 +2,7 @@ package com.turnosweb.backend.presentation.rest;
 
 import com.turnosweb.backend.business.facade.TurnoFacade;
 import com.turnosweb.backend.business.services.TurnoService;
+import com.turnosweb.backend.domain.dto.TurnoDto;
 import com.turnosweb.backend.domain.entities.Turno;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +36,7 @@ public class TurnoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody Turno request){
+    public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody TurnoDto request){
         return ResponseEntity.ok(this.turnoService.update(id, request));
     }
 }

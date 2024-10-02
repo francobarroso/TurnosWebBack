@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -13,8 +16,8 @@ import lombok.experimental.SuperBuilder;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 public class Turno extends Base{
-    private String fechaTurno;
-    private String horaTurno;
+    private LocalDate fechaTurno;
+    private LocalTime horaTurno;
 
     @ManyToOne
     @JoinColumn(name = "servicio_id")

@@ -1,5 +1,6 @@
 package com.turnosweb.backend.domain.dto;
 
+import com.turnosweb.backend.domain.entities.Servicio;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,5 +15,6 @@ public class TurnoDto extends BaseDto{
     private String horaTurno;
     private String nombre;
     private String apellido;
-    private ServicioDto servicio;
+    private Servicio servicio;
+    private boolean terminado;
 }

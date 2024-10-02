@@ -1,5 +1,6 @@
 package com.turnosweb.backend.domain.dto;
 
+import com.turnosweb.backend.domain.entities.Servicio;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,5 +15,5 @@ import java.util.Set;
 public class NegocioDto extends BaseDto{
     private String denominacion;
     private String horario;
-    private Set<ServicioDto> servicios = new HashSet<>();
+    private Set<Servicio> servicios = new HashSet<>();
 }

@@ -5,7 +5,6 @@ import com.turnosweb.backend.business.mapper.EmpleadoMapper;
 import com.turnosweb.backend.business.services.EmpleadoService;
 import com.turnosweb.backend.domain.dto.EmpleadoDto;
 import com.turnosweb.backend.domain.dto.EmpleadoPostDto;
-import com.turnosweb.backend.domain.dto.EmpleadoPutDto;
 import com.turnosweb.backend.domain.entities.Empleado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

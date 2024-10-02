@@ -6,7 +6,6 @@ import com.turnosweb.backend.domain.entities.Empleado;
 import org.mapstruct.Mapper;
 
 import java.util.List;
-
 @Mapper(componentModel = "spring")
 public interface EmpleadoMapper {
     EmpleadoPostDto toDTO(Empleado source);
