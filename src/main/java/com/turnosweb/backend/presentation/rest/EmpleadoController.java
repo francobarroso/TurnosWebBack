@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/empleado")
 @CrossOrigin("*")
 public class EmpleadoController {
-    @Autowired
-    private EmpleadoService empleadoService;
 
     @Autowired
     private EmpleadoFacade empleadoFacade;

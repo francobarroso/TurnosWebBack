@@ -3,9 +3,9 @@ package com.turnosweb.backend.domain.entities;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.HashSet;
-import java.util.Set;
 @Getter
 @Setter
 @AllArgsConstructor
@@ -15,13 +15,13 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 public class Negocio extends Base{
-    private String denominacion;
+    private String nombre;
 
     @Column(columnDefinition = "VARCHAR(500)")
-    private String horario;
+    private String descripcion;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "negocio_id")
     @Builder.Default
-    private Set<Servicio> servicios = new HashSet<>();
+    private List<Servicio> servicios = new ArrayList<>();
 }

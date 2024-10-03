@@ -2,7 +2,7 @@ package com.turnosweb.backend.business.services.Imp;
 
 import com.turnosweb.backend.business.mapper.EmpleadoMapper;
 import com.turnosweb.backend.business.services.EmpleadoService;
-import com.turnosweb.backend.domain.dto.EmpleadoPostDto;
+import com.turnosweb.backend.domain.dto.EmpleadoDto;
 import com.turnosweb.backend.domain.entities.Empleado;
 import com.turnosweb.backend.domain.entities.Horario;
 import com.turnosweb.backend.domain.entities.Negocio;
@@ -12,7 +12,6 @@ import com.turnosweb.backend.repositories.NegocioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -27,9 +26,6 @@ public class EmpleadoServiceImp implements EmpleadoService {
 
     @Autowired
     private HorarioDetalleRepository horarioDetalleRepository;
-
-    @Autowired
-    private EmpleadoMapper empleadoMapper;
 
     @Override
     public Empleado create(Empleado empleado) {
@@ -46,15 +42,16 @@ public class EmpleadoServiceImp implements EmpleadoService {
 
     @Override
     public Empleado update(Long id, Empleado empleado) {
-        EmpleadoPostDto empleadoBd = this.empleadoMapper.toDTO(this.empleadoRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Empleado con id " + id + " no existe")));
+        Empleado empleadoBd = this.empleadoRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Empleado con id " + id + " no existe"));
         eliminarHorarios(empleadoBd, empleado);
+        empleado.setNegocio(empleadoBd.getNegocio());
         return this.empleadoRepository.save(empleado);
     }
 
-    public void eliminarHorarios(EmpleadoPostDto empleadoBd, Empleado empleado){
-        Set<Horario> horariosBd = empleadoBd.getHorarios();
-        Set<Horario> horariosReq = empleado.getHorarios();
+    public void eliminarHorarios(Empleado empleadoBd, Empleado empleado){
+        List<Horario> horariosBd = empleadoBd.getHorarios();
+        List<Horario> horariosReq = empleado.getHorarios();
 
         //Encontrar los horarios a eliminar
         for(Horario horarioBd : horariosBd) {

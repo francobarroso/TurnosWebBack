@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,5 +29,5 @@ public class Empleado extends Base {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "empleado_id")
     @Builder.Default
-    private Set<Horario> horarios = new HashSet<>();
+    private List<Horario> horarios = new ArrayList<>();
 }

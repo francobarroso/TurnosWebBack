@@ -8,6 +8,7 @@ import com.turnosweb.backend.repositories.NegocioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -41,17 +42,17 @@ public class NegocioServiceImp implements NegocioService {
         Negocio negocioBd = this.negocioRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("El negocio con id " + id + " no existe"));
 
-        negocioBd.setDenominacion(request.getDenominacion());
-        negocioBd.setHorario(request.getHorario());
+        negocioBd.setNombre(request.getNombre());
+        negocioBd.setDescripcion(request.getDescripcion());
         negocioBd.setServicios(editarServicios(negocioBd,request));
 
         return this.negocioRepository.save(negocioBd);
     }
 
-    public Set<Servicio> editarServicios(Negocio negocioBd, Negocio request) {
-        Set<Servicio> serviciosBd = negocioBd.getServicios();
-        Set<Servicio> serviciosReq = request.getServicios();
-        Set<Servicio> serviciosDeleted = new HashSet<>(serviciosBd);
+    public List<Servicio> editarServicios(Negocio negocioBd, Negocio request) {
+        List<Servicio> serviciosBd = negocioBd.getServicios();
+        List<Servicio> serviciosReq = request.getServicios();
+        List<Servicio> serviciosDeleted = new ArrayList<>(serviciosBd);
 
         //Añadir nuevamente un servicio
         for(Servicio servicioAdd : serviciosReq){
