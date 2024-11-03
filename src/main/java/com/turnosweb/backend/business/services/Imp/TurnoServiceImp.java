@@ -15,7 +15,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TurnoServiceImp implements TurnoService {
@@ -56,5 +59,41 @@ public class TurnoServiceImp implements TurnoService {
         if(!turnoBd.isTerminado()) turnoBd.setTerminado(request.isTerminado());
 
         return this.turnoRepository.save(turnoBd);
+    }
+
+    @Override
+    public List<Object> graph(LocalDate fechaInicio, LocalDate fechaFin) {
+        List<Turno> turnos = this.turnoRepository.findByFecha(fechaInicio, fechaFin);
+        List<Object> turnosGraph = new ArrayList<>();
+
+        // Formateadores para el mes y el día/mes
+        DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MMMM");
+        DateTimeFormatter dayMonthFormatter = DateTimeFormatter.ofPattern("dd/MM");
+
+        // Verificar si las fechas de inicio y fin están en el mismo mes
+        boolean mismoMes = fechaInicio.getMonth().equals(fechaFin.getMonth()) && fechaInicio.getYear() == fechaFin.getYear();
+
+        for (Turno turno : turnos) {
+            Map<String, Object> turnoData = new HashMap<>();
+            LocalDate fechaTurno = turno.getFechaTurno();
+            double precioTurno = turno.getMonto();
+
+            // Agregar el precio al map
+            turnoData.put("precio", precioTurno);
+
+            if (mismoMes) {
+                // Si es el mismo mes, almacenar "día/mes" (dd/MM)
+                String diaMes = fechaTurno.format(dayMonthFormatter);
+                turnoData.put("fecha", diaMes);
+            } else {
+                // Si es diferente mes, almacenar el nombre del mes (MMMM)
+                String nombreMes = fechaTurno.format(monthFormatter);
+                turnoData.put("fecha", nombreMes);
+            }
+
+            turnosGraph.add(turnoData);
+        }
+
+        return turnosGraph;
     }
 }

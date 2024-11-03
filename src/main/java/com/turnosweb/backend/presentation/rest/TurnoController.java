@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/turno")
 @CrossOrigin("*")
@@ -38,5 +41,13 @@ public class TurnoController {
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody TurnoDto request){
         return ResponseEntity.ok(this.turnoService.update(id, request));
+    }
+
+    @GetMapping("findByFecha")
+    public List<Object> findByFecha(@RequestParam("fechaInicio") LocalDate fechaInicio,
+                                    @RequestParam("fechaFin") LocalDate fechaFin){
+
+        return this.turnoService.graph(fechaInicio,fechaFin);
+
     }
 }
